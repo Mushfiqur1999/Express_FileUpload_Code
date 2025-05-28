@@ -1,0 +1,47 @@
+###############API FIle########
+
+//Upload a File 
+router.post("/demo4",taskController.demo4)
+
+###############Index.js FIle########
+import fileUpload from "express-fileupload";
+
+//file upload
+app.use(fileUpload({
+    limits:{fileSize:50 * 1024 * 1024}
+}))
+
+
+###############Controller file############
+
+// File Upload
+export const demo4 = async (req, res) => {
+  try {
+    // Check if a file is uploaded
+    if (!req.files || !req.files.myFile) {
+      return res.json({ message: "No file uploaded" });
+    }
+
+    // Get the uploaded file
+    let myFile = req.files.myFile;
+
+    // Define path to save
+    let uploadPath = `./storage/${myFile.name}`;
+
+    // Move file to storage folder
+    await myFile.mv(uploadPath);
+
+    return res.json({
+      message: "File uploaded successfully",
+      fileName: myFile.name,
+      size: myFile.size,
+      mimetype: myFile.mimetype,
+    });
+
+  } catch (err) {
+    return res.json({ message: "Upload failed", error: err.message });
+  }
+};
+
+
+
