@@ -4,6 +4,8 @@
 router.post("/demo4",taskController.demo4)
 
 ###############Index.js FIle########
+(npm i express-fileupload)-->  command
+
 import fileUpload from "express-fileupload";
 
 //file upload
